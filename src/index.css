@@ -10,8 +10,8 @@
   --warm: #fff8ef;
   --card: #ffffff;
   --line: #ece9f5;
-  --display: 'Fraunces', Georgia, serif;
   --logo: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --display: var(--logo);
   --body: 'Nunito', system-ui, 'Segoe UI', sans-serif;
   --radius: 22px;
   --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
@@ -43,7 +43,8 @@ h1,
 h2,
 h3 {
   font-family: var(--display);
-  line-height: 1.1;
+  font-weight: 800;
+  line-height: 1.15;
   margin: 0;
 }
 

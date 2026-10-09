@@ -100,15 +100,32 @@
   font-weight: 700;
 }
 .nav-links a {
+  position: relative;
   text-decoration: none;
   color: var(--muted);
   transition: color 0.15s;
 }
-.nav-links a:hover {
+/* Same brush stroke as the hero highlight, just smaller. */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 1px;
+  height: 7px;
+  background: url('./assets/brush.svg') no-repeat 0 100% / 100% 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+.nav-links a:hover,
+.nav-links a:focus-visible {
   color: var(--accent-deep);
-  text-decoration: underline;
-  text-underline-offset: 6px;
-  text-decoration-thickness: 2px;
+}
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 /* ---------- Hero ---------- */
@@ -364,7 +381,7 @@
   color: var(--sun);
 }
 .section h2 {
-  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-size: clamp(2.2rem, 4.8vw, 3.3rem);
   font-weight: 800;
   letter-spacing: -0.01em;
 }
@@ -402,11 +419,79 @@
   margin-bottom: 18px;
 }
 .card h3 {
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   margin-bottom: 8px;
 }
 .card p {
   color: var(--muted);
+}
+/* Cards with a cover panel: the panel covers the whole card with the icon and title
+   centered on it, and the whole panel lifts away on hover/focus to reveal the text. */
+.card.has-cover {
+  padding: 0;
+  overflow: hidden;
+}
+.card-reveal {
+  position: relative;
+  height: 100%;
+  min-height: 190px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: inherit;
+  outline-offset: -4px;
+}
+.card-reveal p {
+  position: relative;
+  z-index: 0;
+}
+.card-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transition: transform 0.55s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.card-cover img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% var(--cover-pos, 60%);
+  filter: brightness(0.5);
+}
+.card-cover-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.card-cover-head .card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  font-size: 1.25rem;
+  margin-bottom: 0;
+}
+.card-cover-head h3 {
+  margin-bottom: 0;
+  color: #fff;
+}
+.card-reveal:hover .card-cover,
+.card-reveal:focus-visible .card-cover,
+.card-reveal:focus-within .card-cover {
+  transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-cover {
+    transition-duration: 0.01s;
+  }
 }
 .tone-violet .card-icon {
   background: #ece6ff;
@@ -456,7 +541,7 @@
   box-shadow: 4px 4px 0 var(--sun);
 }
 .step h3 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 6px;
 }
 .step p {
@@ -586,7 +671,7 @@
     var(--warm);
 }
 .page-hero h1 {
-  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-size: clamp(2.5rem, 6vw, 4.3rem);
   font-weight: 800;
   letter-spacing: -0.02em;
 }
@@ -690,7 +775,7 @@
   margin: 14px 0 6px;
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(2.2rem, 7vw, 3.6rem);
+  font-size: clamp(2.4rem, 7.5vw, 4rem);
   text-decoration: none;
   letter-spacing: -0.01em;
   transition: transform 0.2s;

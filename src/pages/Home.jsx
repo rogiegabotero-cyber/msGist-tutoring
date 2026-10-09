@@ -10,6 +10,10 @@ import {
   PHONE_TEL,
   PhoneIcon,
 } from '../components/shared.jsx'
+import readingGif from '../assets/Reading-blue.gif'
+import writingGif from '../assets/Writing.gif'
+import vocabularyGif from '../assets/Vocabulary.gif'
+import literacyGif from '../assets/Literacy.gif'
 
 const services = [
   {
@@ -17,24 +21,31 @@ const services = [
     title: 'Reading Comprehension',
     text: 'Support with understanding texts, identifying key details, making inferences, and citing evidence.',
     tone: 'violet',
+    cover: readingGif,
   },
   {
     icon: '✏️',
     title: 'Writing Skills',
     text: 'Practice with sentence development, paragraph organization, grammar, punctuation, and written responses.',
     tone: 'sun',
+    cover: writingGif,
+    coverPos: '68%',
   },
   {
     icon: '🧠',
     title: 'Vocabulary & Language',
     text: 'Build word knowledge, context-clue skills, grammar awareness, and stronger academic language.',
     tone: 'coral',
+    cover: vocabularyGif,
+    coverPos: '77%',
   },
   {
     icon: '🌟',
     title: 'Literacy Support',
     text: 'Individualized academic support designed around each student’s needs and areas for growth.',
     tone: 'mint',
+    cover: literacyGif,
+    coverPos: '41%',
   },
 ]
 
@@ -160,10 +171,33 @@ export default function Home() {
             <h2>How I Help</h2>
             <div className="cards">
               {services.map((s) => (
-                <article key={s.title} className={`card tone-${s.tone}`}>
-                  <div className="card-icon">{s.icon}</div>
-                  <h3>{s.title}</h3>
-                  <p>{s.text}</p>
+                <article
+                  key={s.title}
+                  className={`card tone-${s.tone}${s.cover ? ' has-cover' : ''}`}
+                >
+                  {s.cover ? (
+                    // The cover panel (icon + title) hides the text until hovered or focused, then lifts away.
+                    <div
+                      className="card-reveal"
+                      tabIndex={0}
+                      style={s.coverPos ? { '--cover-pos': s.coverPos } : undefined}
+                    >
+                      <div className="card-cover">
+                        <img src={s.cover} alt="" />
+                        <div className="card-cover-head">
+                          <div className="card-icon">{s.icon}</div>
+                          <h3>{s.title}</h3>
+                        </div>
+                      </div>
+                      <p>{s.text}</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="card-icon">{s.icon}</div>
+                      <h3>{s.title}</h3>
+                      <p>{s.text}</p>
+                    </>
+                  )}
                 </article>
               ))}
             </div>
