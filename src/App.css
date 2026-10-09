@@ -843,5 +843,15 @@
     font-weight: 800;
     text-decoration: none;
     box-shadow: 0 12px 30px rgba(31, 42, 68, 0.35);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s;
+  }
+  .mobile-call.is-hidden {
+    opacity: 0;
+    transform: translateY(24px);
+    visibility: hidden;
+    pointer-events: none;
   }
 }
