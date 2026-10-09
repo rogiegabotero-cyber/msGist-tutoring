@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 44" preserveAspectRatio="none">
+  <!-- main brush body: blunt rounded start on the left, tapering to a sharp tip on the right -->
+  <path fill="#ffc933" d="M3 19 C5 9 40 5 120 6 C225 7 335 19 399 38 C335 33 225 28 125 28 C72 28 32 31 8 35 C0 31 0 25 3 19 Z"/>
+  <!-- dry-brush bristle streaks -->
+  <g fill="none" stroke="#ffc933" stroke-linecap="round" vector-effect="non-scaling-stroke">
+    <path d="M14 34 C100 27 240 29 372 40" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
+    <path d="M26 38 C130 32 250 34 330 41" stroke-width="1.6" opacity="0.85" vector-effect="non-scaling-stroke"/>
+    <path d="M40 41 C140 36 220 38 290 42" stroke-width="1.2" opacity="0.7" vector-effect="non-scaling-stroke"/>
+    <path d="M8 29 C40 27 70 27 100 28" stroke-width="1.4" opacity="0.8" vector-effect="non-scaling-stroke"/>
+  </g>
+  <!-- light paper-colored scratches inside the body for the dry-brush look -->
+  <g fill="none" stroke="#fff8ef" stroke-linecap="round" opacity="0.65" vector-effect="non-scaling-stroke">
+    <path d="M30 24 C110 17 230 19 330 31" stroke-width="1.1" vector-effect="non-scaling-stroke"/>
+    <path d="M60 28 C140 23 220 24 290 33" stroke-width="0.9" vector-effect="non-scaling-stroke"/>
+  </g>
+</svg>

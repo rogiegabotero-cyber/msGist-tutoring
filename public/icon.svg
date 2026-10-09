@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="172 177 940 940" role="img" aria-label="Green book">
+  <defs>
+    <!-- cover: yellow-lime at the top fading to teal at the bottom -->
+    <linearGradient id="gCover" gradientUnits="userSpaceOnUse" x1="610" y1="235" x2="700" y2="935">
+      <stop offset="0" stop-color="#e3fb29"/>
+      <stop offset="0.12" stop-color="#cbf838"/>
+      <stop offset="0.3" stop-color="#a0ee58"/>
+      <stop offset="0.52" stop-color="#53e07e"/>
+      <stop offset="0.78" stop-color="#1fd49b"/>
+      <stop offset="1" stop-color="#12cbae"/>
+    </linearGradient>
+    <linearGradient id="gTop" gradientUnits="userSpaceOnUse" x1="320" y1="0" x2="960" y2="0">
+      <stop offset="0" stop-color="#e3fb29"/>
+      <stop offset="0.6" stop-color="#b4ee2c"/>
+      <stop offset="1" stop-color="#84df37"/>
+    </linearGradient>
+    <!-- right page-side strip of the cover -->
+    <linearGradient id="gEdge" gradientUnits="userSpaceOnUse" x1="930" y1="190" x2="1040" y2="830">
+      <stop offset="0" stop-color="#84e03a"/>
+      <stop offset="0.45" stop-color="#2bd073"/>
+      <stop offset="1" stop-color="#04c69f"/>
+    </linearGradient>
+    <!-- spine -->
+    <linearGradient id="gSpine" gradientUnits="userSpaceOnUse" x1="260" y1="330" x2="380" y2="980">
+      <stop offset="0" stop-color="#18bf4a"/>
+      <stop offset="0.5" stop-color="#058550"/>
+      <stop offset="1" stop-color="#049f6c"/>
+    </linearGradient>
+    <linearGradient id="gSpineRim" gradientUnits="userSpaceOnUse" x1="215" y1="380" x2="335" y2="980">
+      <stop offset="0" stop-color="#19a23f"/>
+      <stop offset="0.5" stop-color="#057a4b"/>
+      <stop offset="1" stop-color="#058a5f"/>
+    </linearGradient>
+    <!-- bottom binding -->
+    <linearGradient id="gBind" gradientUnits="userSpaceOnUse" x1="330" y1="1040" x2="1060" y2="940">
+      <stop offset="0" stop-color="#0a9867"/>
+      <stop offset="0.45" stop-color="#067f58"/>
+      <stop offset="1" stop-color="#037f5b"/>
+    </linearGradient>
+    <linearGradient id="gPages" gradientUnits="userSpaceOnUse" x1="0" y1="920" x2="0" y2="1060">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.7" stop-color="#fcfcfe"/>
+      <stop offset="1" stop-color="#e3ebfb"/>
+    </linearGradient>
+  </defs>
+
+  <!-- binding (back layer, wraps under the cover) -->
+  <path d="M425 940 L1066 818 Q1078 880 1070 935 C1066 985 1040 1008 996 1018 L440 1115 Q360 1125 328 1060 Q316 1035 325 1000 Q350 955 425 940 Z" fill="url(#gBind)"/>
+
+  <!-- pages -->
+  <path d="M418 985 L1031 866 Q1040 868 1038 890 L1032 940 Q1028 958 1010 962 L428 1072 Q384 1080 375 1048 Q368 1015 385 1000 Q400 990 418 985 Z" fill="url(#gPages)"/>
+
+  <!-- top + right edge strips (behind cover face) -->
+  <path d="M316 312 L860 180 Q945 163 965 245 L1066 818 L1030 812 L925 232 Q915 205 880 212 L330 340 Z" fill="url(#gTop)"/>
+  <path d="M925 232 L965 245 L1066 818 L1030 812 Z" fill="url(#gEdge)"/>
+
+  <!-- spine -->
+  <path d="M316 312 Q232 330 210 410 L324 1030 L430 945 Z" fill="url(#gSpineRim)"/>
+  <path d="M316 312 Q262 332 256 415 L378 985 L440 945 L336 340 Z" fill="url(#gSpine)"/>
+
+  <!-- cover face -->
+  <path d="M330 340 L865 210 Q912 200 925 236 L1030 812 L430 945 Z" fill="url(#gCover)"/>
+
+  <!-- top lip where cover meets binding -->
+  <path d="M430 945 L1030 812 L1068 818 L1060 835 L430 962 Z" fill="#067f58" opacity="0.9"/>
+</svg>

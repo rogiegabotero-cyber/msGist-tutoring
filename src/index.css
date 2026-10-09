@@ -1,0 +1,74 @@
+:root {
+  --ink: #1f2a44;
+  --muted: #5a6577;
+  --accent: #6b4bff;
+  --accent-deep: #4b2fd6;
+  --accent-soft: #f0eaff;
+  --sun: #ffc933;
+  --coral: #ff7a6b;
+  --mint: #3ecf9e;
+  --warm: #fff8ef;
+  --card: #ffffff;
+  --line: #ece9f5;
+  --display: 'Fraunces', Georgia, serif;
+  --logo: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --body: 'Nunito', system-ui, 'Segoe UI', sans-serif;
+  --radius: 22px;
+  --shadow: 0 10px 30px rgba(31, 42, 68, 0.08);
+  --shadow-lg: 0 24px 60px rgba(75, 47, 214, 0.18);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 92px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--warm);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  line-height: 1.1;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
