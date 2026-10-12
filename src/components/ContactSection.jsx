@@ -4,7 +4,7 @@ export default function ContactSection() {
   return (
     <section className="section" id="contact">
       <div className="container">
-        <div className="contact">
+        <div className="contact" data-reveal="zoom">
           <div className="contact-dots" aria-hidden="true" />
           <div className="eyebrow eyebrow-light">Let’s talk</div>
           <h2>Contact</h2>

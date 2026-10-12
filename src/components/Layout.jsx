@@ -21,8 +21,32 @@ function ScrollManager() {
   return null
 }
 
+// Plays the reveal animation (see App.css) on every [data-reveal] element each time it scrolls
+// into view. It resets only once the element is fully off screen, so it replays on return.
+function useReveal(pathname) {
+  useEffect(() => {
+    const targets = document.querySelectorAll('[data-reveal]')
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach((el) => el.classList.add('is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.intersectionRatio >= 0.12) entry.target.classList.add('is-visible')
+          else if (!entry.isIntersecting) entry.target.classList.remove('is-visible')
+        }
+      },
+      { threshold: [0, 0.12], rootMargin: '0px 0px -6% 0px' },
+    )
+    targets.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [pathname])
+}
+
 export default function Layout() {
   const { pathname } = useLocation()
+  useReveal(pathname)
   const [inView, setInView] = useState({ path: '', value: false })
   // Ignore a stale value from a previous page.
   const actionsInView = inView.path === pathname && inView.value

@@ -10,12 +10,16 @@ export default function AboutPage() {
     <div className="about-page">
       <header className="page-hero">
         <div className="container">
-          <Link to="/" className="back-link">
+          <Link to="/" className="back-link" data-reveal>
             ← Back to home
           </Link>
-          <div className="eyebrow">Meet your tutor</div>
-          <h1>About Ms. Gist’s Tutoring</h1>
-          <p className="sub">
+          <div className="eyebrow" data-reveal style={{ '--reveal-delay': '80ms' }}>
+            Meet your tutor
+          </div>
+          <h1 data-reveal style={{ '--reveal-delay': '160ms' }}>
+            About Ms. Gist’s Tutoring
+          </h1>
+          <p className="sub" data-reveal style={{ '--reveal-delay': '240ms' }}>
             Personalized tutoring and educational support for elementary students, with a focus on
             building strong literacy skills in a positive, encouraging environment.
           </p>
@@ -25,7 +29,7 @@ export default function AboutPage() {
       <main>
         <section className="section">
           <div className="container prose-split">
-            <div className="prose">
+            <div className="prose" data-reveal="left">
               <h2>Our story</h2>
               <p>
                 Ms. Gist’s Tutoring provides private elementary tutoring and academic support in
@@ -35,7 +39,12 @@ export default function AboutPage() {
               </p>
               {/* TODO: Add Ms. Gist's background, experience, and why she tutors. */}
             </div>
-            <aside className="photo-slot" aria-label="Photo of Ms. Gist (coming soon)">
+            <aside
+              className="photo-slot"
+              aria-label="Photo of Ms. Gist (coming soon)"
+              data-reveal="right"
+              style={{ '--reveal-delay': '120ms' }}
+            >
               <span>📷</span>
               <p>Photo of Ms. Gist coming soon</p>
             </aside>
@@ -44,11 +53,17 @@ export default function AboutPage() {
 
         <section className="section about">
           <div className="container">
-            <div className="eyebrow">Where we focus</div>
-            <h2>What sessions cover</h2>
+            <div className="eyebrow" data-reveal>
+              Where we focus
+            </div>
+            <h2 data-reveal style={{ '--reveal-delay': '80ms' }}>
+              What sessions cover
+            </h2>
             <ul className="focus-list">
-              {focusAreas.map((f) => (
-                <li key={f}>{f}</li>
+              {focusAreas.map((f, i) => (
+                <li key={f} data-reveal="zoom" style={{ '--reveal-delay': `${i * 70}ms` }}>
+                  {f}
+                </li>
               ))}
             </ul>
           </div>
@@ -56,9 +71,13 @@ export default function AboutPage() {
 
         <section className="section">
           <div className="container">
-            <div className="eyebrow">The approach</div>
-            <h2>Every student is different</h2>
-            <p className="prose-lead">
+            <div className="eyebrow" data-reveal>
+              The approach
+            </div>
+            <h2 data-reveal style={{ '--reveal-delay': '80ms' }}>
+              Every student is different
+            </h2>
+            <p className="prose-lead" data-reveal style={{ '--reveal-delay': '160ms' }}>
               Individualized academic support designed around each student’s needs and areas for
               growth, in a positive, encouraging environment.
             </p>

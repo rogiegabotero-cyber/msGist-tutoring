@@ -66,9 +66,84 @@ const steps = [
   },
 ]
 
+// A grid of dots whose sizes ripple like a wave. It only animates while it is on screen.
+function WaveDots() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()
+    const GAP = 24
+    const MAX_R = 4.6
+    let width = 0
+    let height = 0
+    let frame = 0
+
+    const draw = (time) => {
+      const t = time / 1000
+      ctx.clearRect(0, 0, width, height)
+      ctx.fillStyle = color
+      for (let y = GAP / 2; y < height; y += GAP) {
+        for (let x = GAP / 2; x < width; x += GAP) {
+          // Two crossing waves give the dots a rolling, uneven swell.
+          const wave =
+            0.5 + 0.25 * Math.sin(x * 0.022 + y * 0.01 - t * 1.8) + 0.25 * Math.sin(y * 0.03 - t * 1.2)
+          const r = MAX_R * (0.12 + 0.88 * wave)
+          ctx.beginPath()
+          ctx.arc(x, y, r, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
+    }
+
+    const loop = (time) => {
+      draw(time)
+      frame = requestAnimationFrame(loop)
+    }
+    const start = () => {
+      if (reduceMotion) draw(0)
+      else if (!frame) frame = requestAnimationFrame(loop)
+    }
+    const stop = () => {
+      cancelAnimationFrame(frame)
+      frame = 0
+    }
+
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1
+      width = canvas.clientWidth
+      height = canvas.clientHeight
+      canvas.width = Math.round(width * dpr)
+      canvas.height = Math.round(height * dpr)
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      if (!frame) draw(0)
+    }
+
+    const resizeObserver = new ResizeObserver(resize)
+    resizeObserver.observe(canvas)
+    const viewObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start()
+      else stop()
+    })
+    viewObserver.observe(canvas)
+
+    return () => {
+      stop()
+      resizeObserver.disconnect()
+      viewObserver.disconnect()
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="wave-dots" />
+}
+
 function HeroArt() {
   return (
-    <div className="art" aria-hidden="true">
+    <div className="art" aria-hidden="true" data-reveal="zoom" style={{ '--reveal-delay': '250ms' }}>
+      <WaveDots />
       <div className="art-blob" />
       <div className="art-card">
         <div className="art-tag">Today’s lesson</div>
@@ -126,22 +201,42 @@ export default function Home() {
     }
   }, [])
 
+  // Each service card briefly lifts its cover and closes it again, one after another, every
+  // time it scrolls into view. Removing the flag when it leaves lets the animation replay.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const cards = document.querySelectorAll('.card.has-cover')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) entry.target.setAttribute('data-peek', '')
+          else entry.target.removeAttribute('data-peek')
+        }
+      },
+      { threshold: 0.45 },
+    )
+    cards.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div className="home-page">
       <header className="hero" id="top" ref={heroRef}>
         <div className="container hero-in">
           <div className="hero-copy">
-            <div className="badge">Elementary Reading &amp; Writing Tutoring</div>
+            <div className="badge" data-reveal>
+              Elementary Reading &amp; Writing Tutoring
+            </div>
             <h1 className="sr-only">Ms. Gist’s Tutoring</h1>
-            <p className="tagline">
+            <p className="tagline" data-reveal style={{ '--reveal-delay': '100ms' }}>
               <span className="tl">Helping Young</span> <span className="tl">Readers &amp; Writers</span>{' '}
               <span className="tl fun">Grow With Confidence</span>
             </p>
-            <p className="sub">
+            <p className="sub" data-reveal style={{ '--reveal-delay': '200ms' }}>
               Personalized tutoring and educational support for elementary students, with a focus
               on building strong literacy skills in a positive, encouraging environment.
             </p>
-            <div className="hero-actions">
+            <div className="hero-actions" data-reveal style={{ '--reveal-delay': '300ms' }}>
               <a className="btn" href={PHONE_TEL}>
                 <PhoneIcon /> Call or Text: {PHONE_DISPLAY}
               </a>
@@ -167,12 +262,21 @@ export default function Home() {
       <main>
         <section className="section" id="help">
           <div className="container">
-            <div className="eyebrow">What we work on</div>
-            <h2>How I Help</h2>
+            <div className="eyebrow" data-reveal>
+              What we work on
+            </div>
+            <h2 data-reveal style={{ '--reveal-delay': '80ms' }}>
+              How I Help
+            </h2>
             <div className="cards">
-              {services.map((s) => (
+              {services.map((s, i) => (
                 <article
                   key={s.title}
+                  data-reveal
+                  style={{
+                    '--reveal-delay': `${(i % 2) * 120}ms`,
+                    '--peek-delay': `${0.4 + i * 0.18}s`,
+                  }}
                   className={`card tone-${s.tone}${s.cover ? ' has-cover' : ''}`}
                 >
                   {s.cover ? (
@@ -206,11 +310,21 @@ export default function Home() {
 
         <section className="section steps-section">
           <div className="container">
-            <div className="eyebrow">Getting started is easy</div>
-            <h2>Three simple steps</h2>
+            <div className="eyebrow" data-reveal>
+              Getting started is easy
+            </div>
+            <h2 data-reveal style={{ '--reveal-delay': '80ms' }}>
+              Three simple steps
+            </h2>
             <ol className="steps">
               {steps.map((s, i) => (
-                <li key={s.title} className="step">
+                <li
+                  key={s.title}
+                  className="step"
+                  data-reveal
+                 
+                  style={{ '--reveal-delay': `${i * 140}ms` }}
+                >
                   <span className="step-num">{i + 1}</span>
                   <h3>{s.title}</h3>
                   <p>{s.text}</p>
@@ -222,11 +336,11 @@ export default function Home() {
 
         <section className="section about" id="about">
           <div className="container about-in">
-            <div>
+            <div data-reveal="left">
               <div className="eyebrow">Meet your tutor</div>
               <h2>About Ms. Gist’s Tutoring</h2>
             </div>
-            <div>
+            <div data-reveal="right" style={{ '--reveal-delay': '120ms' }}>
               <p className="about-text">
                 Ms. Gist’s Tutoring provides private elementary tutoring and academic support in
                 reading, writing, literacy, comprehension, vocabulary, and grammar. Sessions are

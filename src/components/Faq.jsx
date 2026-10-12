@@ -37,14 +37,19 @@ export default function Faq() {
   return (
     <section className="section faq" id="faq">
       <div className="container faq-in">
-        <div className="faq-intro">
+        <div className="faq-intro" data-reveal="left">
           <div className="eyebrow">Good questions</div>
           <h2>Frequently Asked Questions</h2>
           <p>Answers to what parents usually ask before getting started.</p>
         </div>
         <div className="faq-list">
-          {faqs.map((f) => (
-            <details key={f.q} className="faq-item">
+          {faqs.map((f, i) => (
+            <details
+              key={f.q}
+              className="faq-item"
+              data-reveal
+              style={{ '--reveal-delay': `${i * 70}ms` }}
+            >
               <summary>
                 <span>{f.q}</span>
                 <span className="faq-plus" aria-hidden="true" />
